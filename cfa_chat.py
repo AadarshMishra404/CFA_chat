@@ -5,10 +5,21 @@ from datetime import datetime
 from openai import OpenAI
 from pymongo import MongoClient
 
-# Configuration — reads from Streamlit secrets (cloud) or .env (local)
-OPENAI_API_KEY = st.secrets.get("OPENAI_API_KEY", os.environ.get("OPENAI_API_KEY", ""))
-FINE_TUNED_MODEL = st.secrets.get("FINE_TUNED_MODEL", os.environ.get("FINE_TUNED_MODEL", "ft:gpt-4o-mini-2024-07-18:northstar:cfa-expert-v2:DIC778WZ"))
-MONGO_URI = st.secrets.get("MONGO_URI", os.environ.get("MONGO_URI", ""))
+# Configuration — reads from Streamlit secrets (cloud) or env vars (local)
+try:
+    OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+except Exception:
+    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+
+try:
+    FINE_TUNED_MODEL = st.secrets["FINE_TUNED_MODEL"]
+except Exception:
+    FINE_TUNED_MODEL = os.environ.get("FINE_TUNED_MODEL", "ft:gpt-4o-mini-2024-07-18:northstar:cfa-expert-v2:DIC778WZ")
+
+try:
+    MONGO_URI = st.secrets["MONGO_URI"]
+except Exception:
+    MONGO_URI = os.environ.get("MONGO_URI", "")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 QUESTIONS_LOG = os.path.join(BASE_DIR, "questions_log.json")
 
