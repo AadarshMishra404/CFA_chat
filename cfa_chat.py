@@ -23,6 +23,10 @@ except Exception:
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 QUESTIONS_LOG = os.path.join(BASE_DIR, "questions_log.json")
 
+# Debug — show first/last 4 chars of key to verify it loaded (remove after debugging)
+st.sidebar.caption(f"Key loaded: {OPENAI_API_KEY[:7]}...{OPENAI_API_KEY[-4:]}" if OPENAI_API_KEY else "Key: NOT LOADED")
+st.sidebar.caption(f"Model: {FINE_TUNED_MODEL}")
+
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # MongoDB setup
